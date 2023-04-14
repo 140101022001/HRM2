@@ -8,6 +8,9 @@
                 <div class="col-md-6">
                     <h3>HRM List</h3>
                 </div>
+                {{-- <div class="col-md-4">
+                    <a href="{{route('HRM.restore')}}" class="btn btn-primary">Restore</a>
+                </div> --}}
                 <div class="col-md-6">
                     <a href="{{route('HRM.create')}}" class="btn btn-primary float-end">Add New</a>
                 </div>
@@ -55,7 +58,7 @@
                                 <a href="{{route('HRM.edit', $hrm->id)}}" class="btn btn-warning">Edit</a>
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('削除してもよろしいですか？')">Delete</button>
                             </form>
                         </td>
                     </tr>

@@ -201,28 +201,11 @@
         <div>
             <strong>SEスキル</strong>
             <select class="skill_se" name="skill_se[]" multiple>
-                <option value="Java">Java</option>
-                <option value="Go">Go</option>
-                <option value="Kotlin">Kotlin</option>
-                <option value="Swift">Swift</option>
-                <option value="TypeScript">TypeScript</option>
-                <option value="Ruby">Ruby</option>
-                <option value="HTML,CSS">HTML, CSS</option>
-                <option value="SQL">SQL</option>
-                <option value="C,C++">C, C++</option>
-                <option value="C#">C#</option>
-                <option value="R">R</option>
-                <option value="Python">Python</option>
-                <option value="JavaScript">JavaScript</option>
-                <option value="PHP">PHP</option>
-                <option value="VBA">VBA</option>
-                <option value=".NET">.NET</option>
-                <option value="Objective-C">Objective-C</option>
-                <option value="Scala">Scala</option>
-                <option value="Shell Script">Shell Script</option>
+                @foreach ($skills as $skill)
+                <option value="{{$skill->name}}">{{$skill->name}}</option>
+                @endforeach
             </select><br><br>
-            <button type="button" class="btn btn-info">追加</button>
-        </div><br>
+            <a href="{{route('Skill.create')}}" class="button1">追加</a><br>
         <strong>学歴</strong><br>
         <div>
             <input type="checkbox" name="graduate_4" value="1">

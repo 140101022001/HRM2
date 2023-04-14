@@ -4,7 +4,7 @@ use App\Http\Controllers\carController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\HRMController;
-
+use App\Http\Controllers\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +17,7 @@ use App\Http\Controllers\HRMController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+
 
 //car
 Route::middleware('admin.login.check')->prefix('/products')->group(function () {
@@ -64,3 +62,8 @@ Route::get('/tetst', function() {
 // Route::post('/HRM', [HRMController::class, 'create'])->name('hrm.create');
 
 Route::resource('/HRM', HRMController::class);
+Route::resource('/Skill', SkillController::class);
+Route::get('/', function () {
+    return redirect(route('HRM.index'));
+})->name('welcome');
+Route::get('/restore',[HRMController::class,'restore'])->name('HRM.restore');

@@ -45,6 +45,8 @@ return new class extends Migration
             $table->string('working_place', 500);
             $table->string('current_status', 500);
             $table->string('note', 500);
+            // $table->tinyInteger('delete_status')->default(1);
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

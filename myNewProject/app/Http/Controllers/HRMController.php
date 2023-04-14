@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HRM;
+use App\Models\Skill;
 
 class HRMController extends Controller
 {
@@ -17,8 +18,14 @@ class HRMController extends Controller
     public function index()
     {
         //
+        // $hrm = HRM::select('*')
+        //         ->where('delete_status', '=', 1)
+        //         ->paginate(5);
         $hrm = HRM::paginate(5);
-        return view('HRM/HRMindex', compact('hrm'))->with('i', (request()->input('page', 1) - 1) * 5);
+        // $hrm::paginate(5);
+        // $hrm = HRM::withTrashed();
+        // $hrm->restore();
+        return view('HRM/HRM-index', compact('hrm'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -29,7 +36,8 @@ class HRMController extends Controller
     public function create()
     {
         //
-        return view('HRM/HRMcreate');
+        $skills = Skill::all();
+        return view('HRM/HRM-create', compact('skills'));
     }
 
     /**
@@ -64,7 +72,7 @@ class HRMController extends Controller
     {
         //
         $hrm = HRM::find($id);
-        return view('HRM/HRMshow', compact('hrm'));
+        return view('HRM/HRM-show', compact('hrm'));
     }
 
     /**
@@ -77,12 +85,14 @@ class HRMController extends Controller
     {
         //
         $hrm = HRM::find($id);
+        $skills = Skill::all();
         $string = $hrm->skill_se;
         $arraySkill = explode(", ", $string);
         $hrm['skill_se'] = $arraySkill;
-        // $hrm->merge($hrm);
-        return view('HRM/HRMedit', compact('hrm'));
-        // dd($arraySkill);
+        // // $hrm->merge($hrm);
+        return view('HRM/HRM-edit', compact('hrm', 'skills'));
+        // echo dd($hrm->skill_se);
+        // dd($skills);
     }
 
     /**
@@ -118,7 +128,14 @@ class HRMController extends Controller
     {
         //
         $hrm = HRM::find($id);
+        // $hrm->delete_status = 0;
+        // $hrm->update();
         $hrm->delete();
         return redirect(route('HRM.index'))->with('information', 'Delete Successful!');
+    }
+    public function restore() {
+        $hrm = HRM::withTrashed();
+        $hrm->restore();
+        return redirect(route('HRM.index'));
     }
 }
